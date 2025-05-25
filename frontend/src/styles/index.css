@@ -10,7 +10,24 @@ html, body {
 }
 
 body {
+  display: flex;
+  align-items: center;
+  justify-self: center;
   background-color: #ffffff;
-  background-image: radial-gradient(#838383 10%,transparent 10%);
+  background-image: radial-gradient(#3e097a 10%,transparent 10%);
   background-size: 1rem 1rem;
+}
+
+h1{
+  font-size: 50px;
+
+}
+
+h2{
+  font-size: 30px;
+}
+
+h3{
+  font-size: 18px;
+  font-weight: 600;
 }

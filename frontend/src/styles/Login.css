@@ -1,0 +1,114 @@
+.login-container{
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: clamp(300px, 50vw, 500px);
+    color: white;
+    justify-content: space-between;
+    background-color: #000000;
+
+    padding: 20px;
+    border: rgb(136, 136, 136) 1px solid;
+    box-shadow: 0 0 10px rgb(146, 146, 146);
+}
+
+.login-container h1 {
+
+    margin-bottom: 20px;
+
+}
+
+.input-group {
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding-left: 10px;
+    margin-bottom: 15px;
+    color: black;
+    border-radius: 3px;
+}
+
+.input-group label {
+    min-width: 110px;
+    
+    text-align: right;
+}
+
+.input-group input {
+    flex: 1;
+    font-size: 15px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+
+}
+
+.input-group input:focus {
+    outline: none;
+    border: none;
+}
+
+
+
+.login-submit{
+    transition: 0.2s;
+    width: 50%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    
+}
+
+.login-submit:hover{
+    background-color:#773DFF ;
+
+}
+   
+.register-link {
+    transition: 0.2s;
+    margin-top: 10px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    
+    outline: none;
+    cursor: pointer;
+
+}
+
+.register-link h3{
+    font-weight: 400;
+}
+
+.register-link:hover {
+    color: #773DFF;
+    border-bottom: #773DFF 1px solid;
+}
+
+.login-error {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background-color: #FF3D3D;
+    width: 80%;
+    text-align: center;
+    color: black;
+    border-radius: 3px;
+}
+
+.register-success {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background-color: #6cfa84;
+    width: 100%;
+    text-align: center;
+    font-weight: 400;
+    color: rgb(20, 20, 20);
+    border-radius: 3px;
+}
