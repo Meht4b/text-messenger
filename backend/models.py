@@ -17,10 +17,10 @@ class Channels(db.Model):
     
     id = db.Column(db.Integer,primary_key = True, autoincrement=True)
     name = db.Column(db.String(80), nullable = False)
-    user1 = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
+    user0 = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
+    user1 = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = True,default=None)
     user2 = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = True,default=None)
     user3 = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = True,default=None)
-    user4 = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = True,default=None)
 
 
 
@@ -28,10 +28,10 @@ class Channels(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'user1': self.user1,
-            'user2': self.user2,
-            'user3': self.user3,
-            'user4': self.user4,
+            'user1': self.user0,
+            'user2': self.user1,
+            'user3': self.user2,
+            'user4': self.user3,
 
         }
 

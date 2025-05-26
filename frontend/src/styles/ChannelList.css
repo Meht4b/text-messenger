@@ -1,0 +1,15 @@
+.channel-list-container{
+    display: flex;
+    flex-direction: column;
+    width: clamp(300px,30vw,1000px);
+
+    background-color: #ffffff;
+    color: rgb(61, 61, 61);
+    gap: 0px;
+
+    
+}
+
+.channel-list-container > .channel-container:first-child {
+    border: solid 1px #6b6b6b;
+}

@@ -65,18 +65,18 @@ def check_password():
 def create_channel():
     data = request.get_json()
     name = data.get('name')
-    user_ids = data.get('user_ids')
+    user_ids = []
+    for i in range(4):
+        user_ids.append(data.get(f'user{i}'))
 
 
-    if not name or not user_ids or len(user_ids) != 3:
-        return jsonify({"error": "Name and exactly four user IDs are required"}), 400
 
     try:
-        new_channel = Channels(name=name, user1=int(jwt.get_jwt_identity()))
+        new_channel = Channels(name=name, user0=int(get_jwt_identity()))
 
-        for i in range(0, 3):
+        for i in range(1, 4):
             if user_ids[i]:
-                setattr(new_channel, f'user{i+1}', user_ids[i])
+                setattr(new_channel, f'user{i}', user_ids[i])
 
 
         db.session.add(new_channel)
@@ -93,7 +93,11 @@ def create_channel():
 def update_channel():
     data = request.get_json()
     channel_id = data.get('channel_id')
-    user_ids = data.get('user_ids')
+    user_ids = []
+    for i in range(4):
+        user_ids.append(data.get(f'user{i}'))
+
+
 
     current_user_id = int(get_jwt_identity())
     if current_user_id not in user_ids:
@@ -107,10 +111,10 @@ def update_channel():
         if not channel:
             return jsonify({"error": "Channel not found"}), 404
 
-        user_count = 0
+
         for i in range(4):
             if user_ids[i]:
-                setattr(channel, f'user{i+1}', user_ids[i])
+                setattr(channel, f'user{i}', user_ids[i])
 
 
         db.session.commit()
@@ -129,10 +133,10 @@ def get_channels():
 
     try:
         channels = Channels.query.filter(
+            (Channels.user0 == user_id) |
             (Channels.user1 == user_id) |
             (Channels.user2 == user_id) |
-            (Channels.user3 == user_id) |
-            (Channels.user4 == user_id)
+            (Channels.user3 == user_id)
         ).all()
         json_channels = list(map(lambda x: x.to_json(),channels))
 

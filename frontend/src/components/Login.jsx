@@ -3,7 +3,7 @@ import '../styles/login.css'
 import { useEffect } from 'react';
 
 
-function Login({propLogin, propError,setLoggedIn}) {
+function Login({propLogin, propError,setLoggedIn,callBack}) {
 
     
 
@@ -14,7 +14,6 @@ function Login({propLogin, propError,setLoggedIn}) {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
 
-    
 
     const handleSubmit = async (event) => {
 
@@ -62,7 +61,9 @@ function Login({propLogin, propError,setLoggedIn}) {
             if (response.ok) {
                 console.log(data);
                 sessionStorage.setItem("token", data.access_token);
+                sessionStorage.setItem("loggedIn", 1);
                 setLoggedIn(1);
+                callBack();
             } else {
                 setError(1);
                 setName("");

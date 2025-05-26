@@ -2,42 +2,59 @@ import { useState } from 'react'
 
 import './styles/App.css'
 import Login from './components/Login'
+import ChannelList from './components/ChannelList'
 import { useEffect } from 'react';
 
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(0)
 
-  const [error, setError] = useState(0)
-
+  useEffect(() => {
+    setLoggedIn(sessionStorage.getItem("loggedIn") || 0);
+    
+  });
 
   useEffect(() => {
-    if (loggedIn === 1) {
-      const fetchDashboard = async () => {
-        const token = sessionStorage.getItem("token");
+    fetchChannels();
+  }, []);
 
-        const response = await fetch("http://127.0.0.1:5000/dashboard", {
-          method: "GET",
-          headers: {
-            "Authorization": String("Bearer " + token),
+  const [error, setError] = useState(0)
+
+  const [channelsList, setChannelsList] = useState([])
+
+  const fetchChannels = async () => {
+    const url = "http://127.0.0.1:5000/get_channels";
+    const options = {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + sessionStorage.getItem("token"),
             "Content-Type": "application/json",
-          },
-        });
+        }
+        
+    };
+    const response = await fetch(url, options);
+    const data = await response.json();
 
-        const data = await response.json();
+    if (response.ok) {
         console.log(data);
-      };
+        setChannelsList(data.channels);
+    } else {
 
-      fetchDashboard();
+        console.log(data.error)
     }
-  }, [loggedIn]);
-
+  }
 
   return (
+
     <>
-      {loggedIn === 0 && <Login propLogin={1} setLoggedIn={setLoggedIn}/>}
+      {loggedIn === 0 ?
+        <Login propLogin={1} setLoggedIn={setLoggedIn} callBack={fetchChannels}/>:
+        <ChannelList channels_list={channelsList}/>
+        }
       
     </>
+
+    
   )
 }
 
