@@ -9,8 +9,9 @@ function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn }) 
     const [user2, setUser2] = useState('');
     const [user3, setUser3] = useState('');
     const [user4, setUser4] = useState('');
-
     const [error, setError] = useState(0);
+
+    
 
     useEffect(() => {
         setLoggedIn(sessionStorage.getItem("loggedIn") || 0);

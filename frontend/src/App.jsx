@@ -18,6 +18,7 @@ function App() {
   const [creatingChannel, setCreatingChannel] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedChannel, setSelectedChannel] = useState(null);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     setLoggedIn(sessionStorage.getItem("loggedIn") || 0);
