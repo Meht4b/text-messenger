@@ -11,7 +11,7 @@ function Message({ message, user, time }) {
     }, [user]);
 
     return (
-        <div className={`message ${isCurrentUser ? 'current-user' : ''}`}>
+        <div className={`message ${isCurrentUser ? 'current-user' : 'other-user'}`}>
             <div className="message-header">
                 <span className="message-user">{user}</span>
                 <span className="message-time">{time}</span>

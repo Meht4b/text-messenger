@@ -62,6 +62,7 @@ function Login({propLogin, propError,setLoggedIn,callBack}) {
                 console.log(data);
                 sessionStorage.setItem("token", data.access_token);
                 sessionStorage.setItem("loggedIn", 1);
+                sessionStorage.setItem("user", name);
                 setLoggedIn(1);
                 callBack();
             } else {

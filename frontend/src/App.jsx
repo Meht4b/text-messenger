@@ -4,6 +4,8 @@ import './styles/App.css'
 import Login from './components/Login'
 import ChannelList from './components/ChannelList'
 import CreateChannelForm from './components/CreateChannelForm'
+import Message from './components/Message'
+
 import { useEffect } from 'react';
 
 import SearchIcon from './assets/search-normal.png'
@@ -101,7 +103,19 @@ function App() {
             </button>
           </div>
           <div className='body-right'>
-
+                {/* Simulate a long conversation */}
+                <Message message={"Hello, how are you?"} user={"a"} time={"12:00 PM"}/>
+                <Message message={"I'm good, thanks! How about you?"} user={"user2"} time={"12:01 PM"}/>
+                <Message message={"Doing well. Working on the project."} user={"a"} time={"12:02 PM"}/>
+                <Message message={"That's great! Need any help?"} user={"user2"} time={"12:03 PM"}/>
+                <Message message={"Maybe later. I'll let you know."} user={"a"} time={"12:04 PM"}/>
+                <Message message={"Alright, just ping me."} user={"user2"} time={"12:05 PM"}/>
+                <Message message={"Will do. By the way, did you see the new update?"} user={"a"} time={"12:06 PM"}/>
+                <Message message={"Yes, looks awesome!"} user={"user2"} time={"12:07 PM"}/>
+                <Message message={"Glad you like it."} user={"a"} time={"12:08 PM"}/>
+                <Message message={"Let's catch up later."} user={"user2"} time={"12:09 PM"}/>
+                <Message message={"Sure, talk soon!"} user={"a"} time={"12:10 PM"}/>
+                {/* Add more messages as needed to simulate a longer conversation */}
           </div>
         {
           creatingChannel &&

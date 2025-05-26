@@ -7,6 +7,11 @@
 
 }
 
+.body-right{
+    flex-grow: 1;
+    
+}
+
 .body-left{
     display: flex;
     flex-direction: column;
