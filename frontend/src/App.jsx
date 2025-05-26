@@ -15,6 +15,7 @@ function App() {
 
   useEffect(() => {
     setLoggedIn(sessionStorage.getItem("loggedIn") || 0);
+    console.log(creatingChannel)
     
   });
 
@@ -55,11 +56,29 @@ function App() {
 
     <>
       {loggedIn === 0 ?
-        <Login propLogin={1} setLoggedIn={setLoggedIn} callBack={fetchChannels}/>:
+        <Login propLogin={1} setLoggedIn={setLoggedIn} callBack={fetchChannels}/>
+        :
         <div className='body-container'>
-        <ChannelList channels_list={channelsList}/>
+          <div className='body-left'>
+            
+            <div className='body-left-top'>
+              <ChannelList channels_list={channelsList}/>
+            </div>
+            
+            <button className='create-channel-button' onClick={() => setCreatingChannel(true)}>
+              <h2>Create Channel</h2>
+            </button>
+          </div>
+          <div className='body-right'>
+
+          </div>
         {
-          creatingChannel &&<CreateChannelForm />
+          creatingChannel &&
+          <CreateChannelForm 
+          setCreatingChannel = {setCreatingChannel}
+          fetchChannels={fetchChannels}
+          setLoggedIn={setLoggedIn}
+            />
         }
         
         </div>

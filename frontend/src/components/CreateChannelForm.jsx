@@ -2,12 +2,17 @@ import { useState } from 'react'
 import '../styles/CreateChannelForm.css'
 import { useEffect } from 'react';
 
-function CreateChannelForm(){
+function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn }) {
     const [channelName, setChannelName] = useState('');
     const [user1, setUser1] = useState('');
     const [user2, setUser2] = useState('');
     const [user3, setUser3] = useState('');
     const [user4, setUser4] = useState('');
+    useEffect(() => {
+        setLoggedIn(sessionStorage.getItem("loggedIn") || 0);
+        
+    });
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,6 +41,9 @@ function CreateChannelForm(){
             setUser2('');
             setUser3('');
             setUser4('');
+            setCreatingChannel(false);
+            fetchChannels(); 
+
         } else {
             console.error("Error creating channel:", data.error);
             if (response.status === 401) {
@@ -43,12 +51,13 @@ function CreateChannelForm(){
                 sessionStorage.removeItem("token");
                 sessionStorage.setItem("loggedIn", 0);
                 window.location.reload();
+                setLoggedIn(0);
+                console.log("You are logged out, please log in again.");
             }
         }
 
     }
 
-    
     return (
         <div className='create-channel-form-container'>
             <form className='create-channel-form' onSubmit={handleSubmit}>
