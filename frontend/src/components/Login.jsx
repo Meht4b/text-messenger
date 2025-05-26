@@ -3,7 +3,6 @@ import '../styles/login.css'
 import { useEffect } from 'react';
 
 
-
 function Login({propLogin, propError,setLoggedIn}) {
 
     
@@ -59,9 +58,10 @@ function Login({propLogin, propError,setLoggedIn}) {
 
             const response = await fetch(url, options);
             const data = await response.json();
-            
+
             if (response.ok) {
-                localStorage.setItem("token", data.access_token);
+                console.log(data);
+                sessionStorage.setItem("token", data.access_token);
                 setLoggedIn(1);
             } else {
                 setError(1);

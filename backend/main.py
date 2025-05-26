@@ -55,28 +55,28 @@ def check_password():
         return jsonify({"error": "User not found"}), 404
 
     if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
-        return jsonify({"message": "Password is correct", "acces_token": create_access_token(identity=user.id)
+        return jsonify({"message": "Password is correct", "access_token": create_access_token(identity=str(user.id),additional_claims={"name": user.name})
 }), 200
     else:
         return jsonify({"error": "Incorrect password"}), 401
 
 @app.route('/create_channel', methods=['POST'])
+@jwt_required()
 def create_channel():
     data = request.get_json()
     name = data.get('name')
     user_ids = data.get('user_ids')
 
 
-    if not name or not user_ids or len(user_ids) != 4:
+    if not name or not user_ids or len(user_ids) != 3:
         return jsonify({"error": "Name and exactly four user IDs are required"}), 400
 
     try:
-        new_channel = Channels(name=name, user1=user_ids[0])
-        user_count = 1
-        for i in range(1, 4):
+        new_channel = Channels(name=name, user1=int(jwt.get_jwt_identity()))
+
+        for i in range(0, 3):
             if user_ids[i]:
                 setattr(new_channel, f'user{i+1}', user_ids[i])
-
 
 
         db.session.add(new_channel)
@@ -89,10 +89,15 @@ def create_channel():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/update_channel', methods=['PATCH'])
+@jwt_required()
 def update_channel():
     data = request.get_json()
     channel_id = data.get('channel_id')
+    user_ids = data.get('user_ids')
 
+    current_user_id = int(get_jwt_identity())
+    if current_user_id not in user_ids:
+        return jsonify({"error": "You are not authorized to update this channel"}), 403
 
     if not channel_id or not user_ids or len(user_ids) != 4:
         return jsonify({"error": "Channel ID and exactly four user IDs are required"}), 400
@@ -116,8 +121,12 @@ def update_channel():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-@app.route('/get_channels/<int:user_id>', methods=['GET'])
-def get_channels(user_id):
+@app.route('/get_channels', methods=['GET'])
+@jwt_required()
+def get_channels():
+
+    user_id = int(get_jwt_identity())
+
     try:
         channels = Channels.query.filter(
             (Channels.user1 == user_id) |
@@ -132,11 +141,20 @@ def get_channels(user_id):
         return jsonify({"error": str(e)}), 500
     
 @app.route('/send_message', methods=['POST'])
+@jwt_required()
 def send_message():
     data = request.get_json()
     channel_id = data.get('channel_id')
-    user_id = data.get('user_id')
+    user_id = int(get_jwt_identity())
     message = data.get('message')
+
+    # Check if the user is part of the channel
+    channel = Channels.query.get(channel_id)
+    if not channel:
+        return jsonify({"error": "Channel not found"}), 404
+
+    if user_id not in [channel.user1, channel.user2, channel.user3, channel.user4]:
+        return jsonify({"error": "User not in channel"}), 403
 
     if not channel_id or not user_id or not message:
         return jsonify({"error": "Channel ID, User ID, and message are required"}), 400
@@ -153,7 +171,18 @@ def send_message():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/get_messages/<int:channel_id>/<int:last_read>', methods=['GET'])
+@jwt_required()
 def get_messages(channel_id,last_read):
+
+    user_id = int(get_jwt_identity())
+    channel = Channels.query.get(channel_id)
+    if not channel:
+        return jsonify({"error": "Channel not found"}), 404
+
+    if user_id not in [channel.user1, channel.user2, channel.user3, channel.user4]:
+        return jsonify({"error": "User not in channel"}), 403
+
+
     messages = Messages.query.filter(
         Messages.channel_id == channel_id,
         Messages.id > last_read
@@ -169,6 +198,14 @@ def get_messages(channel_id,last_read):
     return jsonify({"messages": json_messages})
 
 
+@app.route('/dashboard', methods=['GET'])
+@jwt_required()
+def dashboard():
+    try:
+        current_user = get_jwt_identity()  # Returns whatever you put in 'identity' during login
+        return jsonify(message=f"Hello, {current_user}! This is your dashboard.")
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     with app.app_context():

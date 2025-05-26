@@ -23,6 +23,7 @@ app.config['JWT_SECRET_KEY'] = jwt_secret_key
 
 
 
+
 jwt = JWTManager(app)
 
 CORS(app)
