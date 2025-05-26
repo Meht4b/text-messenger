@@ -3,11 +3,15 @@ import { useState } from 'react'
 import './styles/App.css'
 import Login from './components/Login'
 import ChannelList from './components/ChannelList'
+import CreateChannelForm from './components/CreateChannelForm'
 import { useEffect } from 'react';
+
 
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(0)
+  const [channelsList, setChannelsList] = useState([])
+  const [creatingChannel, setCreatingChannel] = useState(true);
 
   useEffect(() => {
     setLoggedIn(sessionStorage.getItem("loggedIn") || 0);
@@ -18,9 +22,6 @@ function App() {
     fetchChannels();
   }, []);
 
-  const [error, setError] = useState(0)
-
-  const [channelsList, setChannelsList] = useState([])
 
   const fetchChannels = async () => {
     const url = "http://127.0.0.1:5000/get_channels";
@@ -39,8 +40,14 @@ function App() {
         console.log(data);
         setChannelsList(data.channels);
     } else {
-
-        console.log(data.error)
+        setLoggedIn(0)
+        
+        if (response.status == 401){
+            console.log("Unauthorized access, please log in again.");
+            sessionStorage.removeItem("token");
+            sessionStorage.setItem("loggedIn", 0);
+            setLoggedIn(0);
+        }
     }
   }
 
@@ -49,7 +56,13 @@ function App() {
     <>
       {loggedIn === 0 ?
         <Login propLogin={1} setLoggedIn={setLoggedIn} callBack={fetchChannels}/>:
+        <div className='body-container'>
         <ChannelList channels_list={channelsList}/>
+        {
+          creatingChannel &&<CreateChannelForm />
+        }
+        
+        </div>
         }
       
     </>

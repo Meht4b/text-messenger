@@ -29,7 +29,8 @@ def add_user():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
-    
+
+
 @app.route('/get_users', methods=['GET'])
 def get_users():
     try:
@@ -67,9 +68,12 @@ def create_channel():
     name = data.get('name')
     user_ids = []
     for i in range(4):
-        user_ids.append(data.get(f'user{i}'))
+        user_name = data.get(f'user{i}')
+        user = Users.query.filter_by(name=user_name).first()
+        user_ids.append(user.id if user else None)
 
 
+    
 
     try:
         new_channel = Channels(name=name, user0=int(get_jwt_identity()))

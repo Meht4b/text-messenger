@@ -1,0 +1,62 @@
+.create-channel-form-container {
+    height: 100%;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.425);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+}   
+
+.create-channel-form{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 30px;
+}
+
+.create-channel-form h1{
+    font-weight: 600;
+    position: relative;
+    margin-bottom: 20px;
+    margin-bottom: 20px;   
+}
+
+.create-channel-form h1::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 10px;
+    border-radius: 0 5px 5px 0;
+    background-color: #773DFF;
+    border: solid 2px #000000;
+    
+
+}
+
+.create-channel-form input {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.create-channel-form button{
+    transition: 0.2s;
+    padding: 5px;
+    margin-top: 20px;
+    background-color: #8f62f8;
+    
+    border: none;
+    border: solid 2px #000000;
+    cursor: pointer;
+}
+
+.create-channel-form button:hover{
+    background-color:#773DFF;
+}
