@@ -7,9 +7,11 @@
     justify-content: center;
     position: absolute;
 
+
 }   
 
 .create-channel-form{
+    position:relative;
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -46,7 +48,7 @@
     padding: 10px;
 }
 
-.create-channel-form button{
+.create-channel-form .submit-button{
     transition: 0.2s;
     padding: 5px;
     margin-top: 20px;
@@ -57,6 +59,30 @@
     cursor: pointer;
 }
 
-.create-channel-form button:hover{
+.create-channel-form .submit-button:hover{
     background-color:#773DFF;
+}
+
+.close-button {
+    transition: 0.2s;
+    opacity: 0.8;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: none;
+    height: 25px;
+}
+
+.close-button img{
+    width: 20px;
+    height: 20px;
+
+}
+
+.close-button:hover {
+
+    opacity: 1;
 }

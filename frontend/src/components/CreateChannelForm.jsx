@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import '../styles/CreateChannelForm.css'
 import { useEffect } from 'react';
+import CloseSquare from '../assets/Close_square.png';
 
 function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn }) {
     const [channelName, setChannelName] = useState('');
@@ -61,7 +62,15 @@ function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn }) 
     return (
         <div className='create-channel-form-container'>
             <form className='create-channel-form' onSubmit={handleSubmit}>
+                <button
+                    type='button'
+                    className='close-button'
+                    onClick={() => setCreatingChannel(false)}>
+                    <img src={CloseSquare} alt="Close" />
+
+                </button>
                 <h1>Create Channel</h1>
+                
                 <label htmlFor='channel-name'>Channel Name:</label>
                 <input
                     type='text'
@@ -111,7 +120,7 @@ function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn }) 
                     onChange={e => setUser4(e.target.value)}
                 />
 
-                <button><h2>Create</h2></button>
+                <button className='submit-button'><h2>Create</h2></button>
                 
             </form>
         </div>
