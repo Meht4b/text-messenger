@@ -83,7 +83,19 @@ function Login({propLogin, propError,setLoggedIn,callBack}) {
         }
     }, [userCreated]);
 
+    useEffect(() => {
+        if (Error === 1) {
+            const timer = setTimeout(() => {
+                setError(0);
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [Error]);
+
+
     return (
+        <>
+
         <form className="login-container" onSubmit={handleSubmit}>
             {Login ? <h1>Login</h1> : <h1>Register</h1>}
             <div className="input-group">
@@ -120,22 +132,23 @@ function Login({propLogin, propError,setLoggedIn,callBack}) {
                     <h3>New? Register here</h3>
                 </button>
             )}
-
-            {Error == 1 && Login == 1 && (
-                <div className='login-error'><h3>Password or username is incorrect</h3></div>
-            )}
-
-            {Error == 1 && Login == 0 && (
-                <div className='login-error'><h3>Username already exists</h3></div>
-            )}
-
-            {
-                userCreated == 1 && (
-                    <div className='register-success'><h3>User created successfully! You can now login.</h3></div>
-                )
-            }
-
         </form>
+
+        {Error == 1 && Login == 1 && (
+            <div className='login-error'><h3>Password or username is incorrect</h3></div>
+        )}
+
+        {Error == 1 && Login == 0 && (
+            <div className='login-error'><h3>Username already exists</h3></div>
+        )}
+
+        {
+            userCreated == 1 && (
+                <div className='register-success'><h3>User created successfully! You can now login.</h3></div>
+            )
+        }
+
+          </>
     )
 }
 

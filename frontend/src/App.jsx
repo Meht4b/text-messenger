@@ -6,16 +6,23 @@ import ChannelList from './components/ChannelList'
 import CreateChannelForm from './components/CreateChannelForm'
 import { useEffect } from 'react';
 
+import SearchIcon from './assets/search-normal.png'
+
 
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(0)
   const [channelsList, setChannelsList] = useState([])
-  const [creatingChannel, setCreatingChannel] = useState(true);
+  const [creatingChannel, setCreatingChannel] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedChannel, setSelectedChannel] = useState(null);
 
   useEffect(() => {
     setLoggedIn(sessionStorage.getItem("loggedIn") || 0);
-    console.log(creatingChannel)
+    if (sessionStorage.getItem("token") == null || sessionStorage.getItem("token") === "null") {
+      sessionStorage.setItem("loggedIn", 0);
+      setLoggedIn(0);
+    }
     
   });
 
@@ -23,15 +30,21 @@ function App() {
     fetchChannels();
   }, []);
 
+  useEffect(() => {
+    fetchChannels();
+  }, [searchQuery]);
 
   const fetchChannels = async () => {
-    const url = "http://127.0.0.1:5000/get_channels";
+    const searchq = searchQuery ? searchQuery : "NULLNULL";
+    const url = "http://127.0.0.1:5000/get_channels/" + searchq;
     const options = {
         method: "GET",
         headers: {
             "Authorization": "Bearer " + sessionStorage.getItem("token"),
             "Content-Type": "application/json",
-        }
+        },
+
+        
         
     };
     const response = await fetch(url, options);
@@ -60,8 +73,26 @@ function App() {
         :
         <div className='body-container'>
           <div className='body-left'>
+            <div className='body-left-top-header'>
+              <div className='header-title'>
+                <h1>Channels</h1>
+              </div>
+                <div className='search-container'>
+                  <input 
+                  type="text" placeholder='Search Channels' 
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+
+                  }
+                }
+                  />
+                  <button className='search-button'><img src={SearchIcon} alt="" /></button>
+                </div>
+              </div>
             
             <div className='body-left-top'>
+
               <ChannelList channels_list={channelsList}/>
             </div>
             

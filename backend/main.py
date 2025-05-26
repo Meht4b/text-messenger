@@ -69,7 +69,10 @@ def create_channel():
     user_ids = []
     for i in range(4):
         user_name = data.get(f'user{i}')
+
         user = Users.query.filter_by(name=user_name).first()
+        if not user and user_name:
+            return jsonify({"error": f"User {user_name} not found"}), 404
         user_ids.append(user.id if user else None)
 
 
@@ -129,25 +132,36 @@ def update_channel():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-@app.route('/get_channels', methods=['GET'])
+@app.route('/get_channels/<string:search>', methods=['GET'])
 @jwt_required()
-def get_channels():
+def get_channels(search):
 
     user_id = int(get_jwt_identity())
 
+
     try:
-        channels = Channels.query.filter(
-            (Channels.user0 == user_id) |
-            (Channels.user1 == user_id) |
-            (Channels.user2 == user_id) |
-            (Channels.user3 == user_id)
-        ).all()
+        if search != "NULLNULL":
+            channels = Channels.query.filter(
+                ((Channels.user0 == user_id) |
+                 (Channels.user1 == user_id) |
+                 (Channels.user2 == user_id) |
+                 (Channels.user3 == user_id))
+                & (Channels.name.contains(search))
+            ).all()
+        else:
+            channels = Channels.query.filter(
+                ((Channels.user0 == user_id) |
+                (Channels.user1 == user_id) |
+                (Channels.user2 == user_id) |
+                (Channels.user3 == user_id))
+
+            ).all()
         json_channels = list(map(lambda x: x.to_json(),channels))
 
         return jsonify({"channels" : json_channels})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
 @app.route('/send_message', methods=['POST'])
 @jwt_required()
 def send_message():

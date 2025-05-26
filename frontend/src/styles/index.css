@@ -13,9 +13,9 @@ body {
   display: flex;
   align-items: center;
   justify-self: center;
-  background-color: #ffffff;
+  background-color: #ebebeb;
   background-image: radial-gradient(#3e097a 10%,transparent 10%);
-  background-size: 1rem 1rem;
+  background-size: 2rem 2rem;
 }
 
 #root {

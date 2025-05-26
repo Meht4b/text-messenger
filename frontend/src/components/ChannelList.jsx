@@ -14,7 +14,7 @@ function ChannelList({channels_list}){
                     <Channel key={index} channel={channel} />
                 ))
             ) : (
-                <div>No channels</div>
+                <div className='no-channels-found'>No channels</div>
             )}
         </div>
     )
