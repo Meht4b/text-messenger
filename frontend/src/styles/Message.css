@@ -33,7 +33,7 @@
 .message-header{
     font-size: 12px;
     display: flex;
-    gap: 10px;
+    gap: 30px;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 5px;
@@ -41,4 +41,17 @@
 
 .message-user{
     font-size: 15px;
+}
+
+.server-message{
+    background-color: #bbbbbb;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    color: #383838;
+    width: fit-content;
+    border-radius: 10px;
+    margin-right: auto;
+    margin-left: auto;
+
 }

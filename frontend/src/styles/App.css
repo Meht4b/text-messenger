@@ -9,7 +9,13 @@
 
 .body-right{
     flex-grow: 1;
-    
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 30px;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .body-left{
@@ -89,6 +95,15 @@
     margin-top: 30px;
 
     background-color: #f0f0f0;
+}
+
+.search-container input{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    border-radius: 40px;
+
+    font-size: 20px;
 }
 
 

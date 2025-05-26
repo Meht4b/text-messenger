@@ -43,6 +43,8 @@ class Messages(db.Model):
     message = db.Column(db.String(500), nullable = False)
     timestamp = db.Column(db.DateTime, server_default=db.func.now(), nullable = False)
 
+    server_msg = db.Column(db.Boolean, default=False)
+
     channel = db.relationship('Channels', backref='messages')
     user = db.relationship('Users', backref='messages')
 
@@ -52,7 +54,8 @@ class Messages(db.Model):
             'channel_id': self.channel_id,
             'user_id': self.user_id,
             'message': self.message,
-            'timestamp': self.timestamp.isoformat()
+            'timestamp': self.timestamp.isoformat(),
+            'server_msg': self.server_msg
         }
     
 

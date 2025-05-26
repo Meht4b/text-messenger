@@ -86,8 +86,30 @@ def create_channel():
                 setattr(new_channel, f'user{i}', user_ids[i])
 
 
+
         db.session.add(new_channel)
         db.session.commit()
+
+        created_msg = Messages(
+            channel_id=new_channel.id,
+            user_id=int(get_jwt_identity()),
+            message=f"Channel '{name}' created by {Users.query.get(int(get_jwt_identity())).name}",
+            server_msg=True
+        )
+        added_messages = [created_msg]
+        for i in range(1, 4):
+            if user_ids[i]:
+                added_messages.append(Messages(
+                    channel_id=new_channel.id,
+                    user_id=user_ids[i],
+                    message=f"{Users.query.get(user_ids[i]).name} was added to the channel",
+                    server_msg=True
+                ))
+
+
+        for msg in added_messages:
+            db.session.add(msg)
+            db.session.commit()
 
         return jsonify({"message": "Channel created successfully", "channel": new_channel.to_json()}), 201
 
@@ -175,7 +197,7 @@ def send_message():
     if not channel:
         return jsonify({"error": "Channel not found"}), 404
 
-    if user_id not in [channel.user1, channel.user2, channel.user3, channel.user4]:
+    if user_id not in [channel.user1, channel.user2, channel.user3, channel.user0]:
         return jsonify({"error": "User not in channel"}), 403
 
     if not channel_id or not user_id or not message:
@@ -201,8 +223,9 @@ def get_messages(channel_id,last_read):
     if not channel:
         return jsonify({"error": "Channel not found"}), 404
 
-    if user_id not in [channel.user1, channel.user2, channel.user3, channel.user4]:
+    if user_id not in [channel.user1, channel.user2, channel.user3, channel.user0]:
         return jsonify({"error": "User not in channel"}), 403
+
 
 
     messages = Messages.query.filter(
@@ -214,7 +237,9 @@ def get_messages(channel_id,last_read):
         'id': x.id,
         'user_id': x.user_id,
         'message': x.message,
-        'timestamp': x.timestamp.isoformat()
+        'user_name': Users.query.get(x.user_id).name ,
+        'timestamp': x.timestamp.isoformat(),
+        'server_msg': x.server_msg
     }, messages))
 
     return jsonify({"messages": json_messages})

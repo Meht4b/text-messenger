@@ -1,0 +1,26 @@
+.message-box{
+
+    width: 95%;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: solid 1px #000000;
+    padding: 10px 20px;
+    border-radius: 50px;
+}
+
+.message-box *{
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+.message-input {
+    font-size: 17px;
+    flex-grow: 1;
+    height: 100%;
+}
+
+.send-button img{
+    width: 45px;
+
+}
