@@ -1,8 +1,14 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
+import os 
+from dotenv import load_dotenv
+
+load_dotenv()
+jwt_secret_key = os.getenv('JWT_SECRET_KEY')
 
 @event.listens_for(Engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
@@ -13,6 +19,11 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db' 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_SECRET_KEY'] = jwt_secret_key
+
+
+
+jwt = JWTManager(app)
 
 CORS(app)
 

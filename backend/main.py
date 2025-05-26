@@ -1,6 +1,8 @@
-from flask import request, jsonify
-from config import app, db
+from flask import request, jsonify,session
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from config import app, db,jwt
 from models import Channels,Messages, Users
+
 import bcrypt
 
 
@@ -53,7 +55,8 @@ def check_password():
         return jsonify({"error": "User not found"}), 404
 
     if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
-        return jsonify({"message": "Password is correct", "user": user.to_json()}), 200
+        return jsonify({"message": "Password is correct", "acces_token": create_access_token(identity=user.id)
+}), 200
     else:
         return jsonify({"error": "Incorrect password"}), 401
 

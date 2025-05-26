@@ -12,8 +12,8 @@ function App() {
 
   return (
     <>
-
-
+      {loggedIn === 0 && <Login propLogin={1} setLoggedIn={setLoggedIn}/>}
+      
     </>
   )
 }
