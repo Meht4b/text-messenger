@@ -6,6 +6,7 @@
     overflow-y: scroll;
     flex-grow: 1;
     width: 100%;
+    margin-right: 10px;
 }
 
 .no-channel-selected{
@@ -17,4 +18,24 @@
     font-size: 30px;
     display: none;
     font-weight: 600;
+}
+
+
+.message-list::-webkit-scrollbar {
+
+  width: 7px;
+}
+
+
+.message-list::-webkit-scrollbar-track {
+
+  background: rgba(236, 236, 236, 0);
+
+}
+ 
+.message-list::-webkit-scrollbar-thumb {
+    margin-left: 10px;
+  background: hsla(0, 0%, 28%, 0.548);
+  border-radius: 3px;
+
 }

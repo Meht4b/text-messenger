@@ -6,7 +6,7 @@ import ChannelList from './components/ChannelList'
 import CreateChannelForm from './components/CreateChannelForm'
 import MessageList from './components/MessageList'
 import MessageBox from './components/MessageBox'
-
+import ChannelHeader from './components/ChannelHeader'
 import { useEffect } from 'react';
 
 import SearchIcon from './assets/search-normal.png'
@@ -19,7 +19,9 @@ function App() {
   const [creatingChannel, setCreatingChannel] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedChannel, setSelectedChannel] = useState(null);
+  const [selectedChannelName, setSelectedChannelName] = useState("");
   const [messages, setMessages] = useState([]);
+  
 
   useEffect(() => {
     setLoggedIn(sessionStorage.getItem("loggedIn") || 0);
@@ -109,7 +111,7 @@ function App() {
             
             <div className='body-left-top'>
 
-              <ChannelList channels_list={channelsList} setSelectedChannel={setSelectedChannel}/>
+              <ChannelList channels_list={channelsList} setSelectedChannel={setSelectedChannel} setSelectedChannelName = {setSelectedChannelName}/>
             </div>
             
             <button className='create-channel-button' onClick={() => setCreatingChannel(true)}>
@@ -117,6 +119,10 @@ function App() {
             </button>
           </div>
           <div className='body-right'>
+                { 
+                  selectedChannel &&
+                  <ChannelHeader selectedChannel={selectedChannel} />
+                }
                 <MessageList selectedChannel={selectedChannel}/>
                 { 
                 selectedChannel &&

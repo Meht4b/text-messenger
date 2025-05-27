@@ -1,0 +1,8 @@
+.channel-header{
+    width: 100%;
+    padding: 20px 10px;
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    border: solid 1px #5e5e5e;
+    color: #383838;
+}
