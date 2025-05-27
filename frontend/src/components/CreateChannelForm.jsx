@@ -28,7 +28,7 @@ function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn, ed
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const url = editChannel?"https://text-messenger.onrender.com/update_channel":"https://text-messenger.onrender.com/create_channel";
+        const url = editChannel?(process.env.REACT_APP_API_URL || "http://localhost:5000") + "/update_channel":(process.env.REACT_APP_API_URL || "http://localhost:5000") + "/create_channel";
         
         const options = {
             method: editChannel?"PATCH":"POST",
