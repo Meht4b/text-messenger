@@ -8,6 +8,8 @@ function MessageBox({currentChannel}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        msg = message;
+        setMessage('');
         const url = "https://text-messenger.onrender.com/send_message" ;
         const options = {
         method: "POST",
@@ -17,7 +19,7 @@ function MessageBox({currentChannel}) {
         },
         body: JSON.stringify({
             channel_id: currentChannel.id,
-            message: message
+            message: msg
         })
         };
 
@@ -25,7 +27,7 @@ function MessageBox({currentChannel}) {
         const data = await response.json();
         if (response.ok) {
             console.log("Message sent successfully");
-            setMessage(''); // Clear the input field after sending
+
         } else {
             console.error("Error sending message:", data);
         }
