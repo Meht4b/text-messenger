@@ -17,10 +17,15 @@ class Channels(db.Model):
     
     id = db.Column(db.Integer,primary_key = True, autoincrement=True)
     name = db.Column(db.String(80), nullable = False)
-    user0 = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
+    user0 = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = True)
     user1 = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = True,default=None)
     user2 = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = True,default=None)
     user3 = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = True,default=None)
+
+    user0_name = db.Column(db.String(80), nullable = True, default=None)
+    user1_name = db.Column(db.String(80), nullable = True, default=None)
+    user2_name = db.Column(db.String(80), nullable = True, default=None)
+    user3_name = db.Column(db.String(80), nullable = True, default=None)
 
 
 
@@ -32,7 +37,10 @@ class Channels(db.Model):
             'user2': self.user1,
             'user3': self.user2,
             'user4': self.user3,
-
+            'user1_name': self.user0_name,
+            'user2_name': self.user1_name,
+            'user3_name': self.user2_name,
+            'user4_name': self.user3_name
         }
 
 class Messages(db.Model):

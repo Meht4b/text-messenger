@@ -67,6 +67,8 @@ def create_channel():
     data = request.get_json()
     name = data.get('name')
     user_ids = []
+    user_names = []
+
     for i in range(4):
         user_name = data.get(f'user{i}')
 
@@ -74,9 +76,7 @@ def create_channel():
         if not user and user_name:
             return jsonify({"error": f"User {user_name} not found"}), 404
         user_ids.append(user.id if user else None)
-
-
-    
+        user_names.append(user.name if user else None)
 
     try:
         new_channel = Channels(name=name, user0=int(get_jwt_identity()))
@@ -85,6 +85,9 @@ def create_channel():
             if user_ids[i]:
                 setattr(new_channel, f'user{i}', user_ids[i])
 
+        for i in range(4):
+            if user_names[i]:
+                setattr(new_channel, f'user{i}_name', user_names[i])
 
 
         db.session.add(new_channel)
@@ -122,30 +125,89 @@ def create_channel():
 def update_channel():
     data = request.get_json()
     channel_id = data.get('channel_id')
-    user_ids = []
-    for i in range(4):
-        user_ids.append(data.get(f'user{i}'))
-
-
-
+    channel = Channels.query.get(channel_id)
+    if not channel:
+        return jsonify({"error": "Channel not found"}), 404
     current_user_id = int(get_jwt_identity())
-    if current_user_id not in user_ids:
+    current_user_name = Users.query.get(current_user_id).name
+
+    channel_name = data.get('name', channel.name)
+
+    
+
+    prev_users = [channel.user0, channel.user1, channel.user2, channel.user3]
+    new_users = []
+    deleted_users = []
+    users = []
+
+    for i in range(4):
+        user_name = data.get(f'user{i}')
+
+        user = Users.query.filter_by(name=user_name).first()
+        if not user and user_name:
+            return jsonify({"error": f"User {user_name} not found"}), 404
+        users.append(user if user else None)
+
+    if current_user_id not in [channel.user0, channel.user1, channel.user2, channel.user3]:
         return jsonify({"error": "You are not authorized to update this channel"}), 403
 
-    if not channel_id or not user_ids or len(user_ids) != 4:
+    if not channel_id:
         return jsonify({"error": "Channel ID and exactly four user IDs are required"}), 400
+
+    for i in users:
+        if i:
+            if i.id not in prev_users:
+                new_users.append(i)
+
+    for i in prev_users:
+        if i:
+            if i not in [user.id for user in users if user]:
+                deleted_users.append(i)
+            
+    msgs = []
+    for i in new_users:
+        msgs.append(Messages(
+            channel_id=channel_id,
+            user_id=current_user_id,
+            message=f"{current_user_name} added {i.name} to the channel",
+            server_msg=True
+        ))
+
+    for i in deleted_users:
+        msgs.append(Messages(
+            channel_id=channel_id,
+            user_id=current_user_id,
+            message=f"{current_user_name} removed {Users.query.filter_by(id=i).first().name} from the channel",
+            server_msg=True
+        ))
+    
+
+    if channel_name != channel.name:
+        msgs.append(Messages(
+            channel_id=channel_id,
+            user_id=current_user_id,
+            message=f"{current_user_name} changed the channel name to '{channel_name}'",
+            server_msg=True
+        ))
 
     try:
         channel = Channels.query.get(channel_id)
         if not channel:
             return jsonify({"error": "Channel not found"}), 404
 
+        channel.name = channel_name
 
         for i in range(4):
-            if user_ids[i]:
-                setattr(channel, f'user{i}', user_ids[i])
+            if users[i]:
+                setattr(channel, f'user{i}', users[i].id)
+                setattr(channel, f'user{i}_name', users[i].name)
+            else:
+                setattr(channel, f'user{i}', None)
+                setattr(channel, f'user{i}_name', None)
 
-
+        for msg in msgs:
+            db.session.add(msg)
+            
         db.session.commit()
 
         return jsonify({"message": "Channel updated successfully", "channel": channel.to_json()}), 200

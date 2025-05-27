@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import '../styles/Messagelist.css'
 import Message from './Message';
 import { useEffect } from 'react';
 
-function MessageList({ selectedChannel }) {
+function MessageList({ selectedChannel,setLoggedIn }) {
 //[message, user, time]
     const [messages, setMessages] = useState([]);
 
@@ -27,11 +27,19 @@ function MessageList({ selectedChannel }) {
             };
             const response = await fetch(url, options);
             if (!response.ok) {
+                if (response.status == 401 || response.status == 403) {
+                    setLoggedIn(0);
+                    sessionStorage.removeItem("token");
+                    sessionStorage.removeItem("username");
+                    sessionStorage.setItem("loggedIn", 0);
+                
+                }
                 throw new Error(`HTTP error! status: ${response.status}`);
+
             }
             const data = await response.json();
             setMessages(data.messages || []);
-            console.log("Fetched messages:", data.messages);
+
         } catch (error) {
             console.error("Failed to fetch messages:", error);
         }
@@ -43,8 +51,28 @@ function MessageList({ selectedChannel }) {
         }
     }, [selectedChannel]);
 
+    const messageListRef = useRef(null);
+
+    const prevMessagesRef = useRef([]);
+
+    useEffect(() => {
+        const prevMessages = prevMessagesRef.current;
+        // Only scroll if the content of messages changes (not just a new reference)
+        const contentChanged = 
+            messages.length !== prevMessages.length ||
+            messages.some((msg, i) => 
+                prevMessages[i]?.message !== msg.message ||
+                prevMessages[i]?.user_name !== msg.user_name ||
+                prevMessages[i]?.timestamp !== msg.timestamp
+            );
+        if (contentChanged && messageListRef.current) {
+            messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+        }
+        prevMessagesRef.current = messages;
+    }, [messages]);
+
     return (
-        <div className='message-list'>
+        <div className='message-list' ref={messageListRef}>
             {selectedChannel ? (
                 messages.map((msg, index) => (
                     <Message

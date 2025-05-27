@@ -3,39 +3,51 @@ import '../styles/CreateChannelForm.css'
 import { useEffect } from 'react';
 import CloseSquare from '../assets/Close_square.png';
 
-function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn }) {
+function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn, editChannel, selectedChannel,setEditChannel }) {
     const [channelName, setChannelName] = useState('');
     const [user1, setUser1] = useState('');
     const [user2, setUser2] = useState('');
     const [user3, setUser3] = useState('');
     const [user4, setUser4] = useState('');
     const [error, setError] = useState(0);
+    const [changedElements, setChangedElements] = useState(0);
 
-    
 
     useEffect(() => {
         setLoggedIn(sessionStorage.getItem("loggedIn") || 0);
-        
+        if (changedElements == 0){
+        setChannelName(editChannel ? selectedChannel.name : '');
+        setUser1(editChannel ? selectedChannel.user1_name : '');
+        setUser2(editChannel ? selectedChannel.user2_name : '');
+        setUser3(editChannel ? selectedChannel.user3_name : '');
+        setUser4(editChannel ? selectedChannel.user4_name : '');
+        setChangedElements(1);
+        }
     });
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const url = "http://127.0.0.1:5000/create_channel";
+        const url = editChannel?"http://127.0.0.1:5000/update_channel":"http://127.0.0.1:5000/create_channel";
+        
         const options = {
-            method: "POST",
+            method: editChannel?"PATCH":"POST",
             headers: {
                 "Authorization": "Bearer " + sessionStorage.getItem("token"),
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                
                 name: channelName,
+                channel_id: editChannel ? selectedChannel.id : null,
                 user0: user1,
                 user1: user2,
                 user2: user3,
                 user3: user4
             }),
         };
+
+        
 
         const response = await fetch(url, options);
         const data = await response.json();
@@ -48,6 +60,7 @@ function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn }) 
             setUser4('');
             setCreatingChannel(false);
             fetchChannels(); 
+            setChangedElements(0);
 
         } else {
             console.error("Error creating channel:", data.error);
@@ -66,6 +79,8 @@ function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn }) 
 
     }
 
+    
+
     return (
         <>  
             <div className='create-channel-form-container'>
@@ -73,11 +88,15 @@ function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn }) 
                     <button
                         type='button'
                         className='close-button'
-                        onClick={() => setCreatingChannel(false)}>
+                        onClick={() => {
+                            setCreatingChannel(false);
+                            setEditChannel(0);
+
+                        }}>
                         <img src={CloseSquare} alt="Close" />
 
                     </button>
-                    <h1>Create Channel</h1>
+                    <h1>{editChannel?"Edit Channel":"Create Channel"}</h1>
                     
                     <label htmlFor='channel-name'>Channel Name:</label>
                     <input
@@ -128,7 +147,7 @@ function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn }) 
                         onChange={e => setUser4(e.target.value)}
                     />
 
-                    <button className='submit-button'><h2>Create</h2></button>
+                    <button className='submit-button'><h2>{editChannel?"Edit":"Create"}</h2></button>
                     
                 </form>
             </div>

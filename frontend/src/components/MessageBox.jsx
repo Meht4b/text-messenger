@@ -16,7 +16,7 @@ function MessageBox({currentChannel}) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            channel_id: currentChannel,
+            channel_id: currentChannel.id,
             message: message
         })
         };
@@ -34,7 +34,6 @@ function MessageBox({currentChannel}) {
 
         
     };
-    
 
 
     return (

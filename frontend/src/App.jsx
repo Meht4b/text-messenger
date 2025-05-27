@@ -21,7 +21,7 @@ function App() {
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [selectedChannelName, setSelectedChannelName] = useState("");
   const [messages, setMessages] = useState([]);
-  
+  const [editChannel, setEditChannel] = useState(0);
 
   useEffect(() => {
     setLoggedIn(sessionStorage.getItem("loggedIn") || 0);
@@ -121,9 +121,13 @@ function App() {
           <div className='body-right'>
                 { 
                   selectedChannel &&
-                  <ChannelHeader selectedChannel={selectedChannel} />
+                  <ChannelHeader 
+                  selectedChannel={selectedChannel}
+                  setEditChannel={setEditChannel}
+                  setCreatingChannel={setCreatingChannel}
+                  />
                 }
-                <MessageList selectedChannel={selectedChannel}/>
+                <MessageList selectedChannel={selectedChannel} setLoggedIn={setLoggedIn}/>
                 { 
                 selectedChannel &&
                   <MessageBox currentChannel={selectedChannel} />
@@ -135,6 +139,9 @@ function App() {
           setCreatingChannel = {setCreatingChannel}
           fetchChannels={fetchChannels}
           setLoggedIn={setLoggedIn}
+          selectedChannel={selectedChannel}
+          editChannel={editChannel}
+          setEditChannel={setEditChannel}
             />
         }
         

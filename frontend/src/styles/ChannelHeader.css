@@ -2,7 +2,37 @@
     width: 100%;
     padding: 20px 10px;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: rgb(255, 255, 255);
     border: solid 1px #5e5e5e;
     color: #383838;
+}
+
+.header-left-users{
+    display: flex;
+    align-items: center;
+    color: #696969;
+
+}
+
+button{
+    background-color: #773dfffb;
+    opacity: 0.9;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px;
+    height: 70px;
+    
+}
+
+button:hover{
+    opacity: 1;
+}
+
+img{
+
+    height: 60px;
 }
