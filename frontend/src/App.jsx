@@ -159,6 +159,8 @@ function App() {
           selectedChannel={selectedChannel}
           editChannel={editChannel}
           setEditChannel={setEditChannel}
+          setSelectedChannel={setSelectedChannel}
+          lastReadRef={lastReadRef}
             />
         }
         
@@ -215,6 +217,7 @@ function App() {
                   selectedChannel={selectedChannel}
                   setEditChannel={setEditChannel}
                   setCreatingChannel={setCreatingChannel}
+                  
                   />
                 }
                 <MessageList selectedChannel={selectedChannel} setLoggedIn={setLoggedIn} 
@@ -234,6 +237,8 @@ function App() {
           selectedChannel={selectedChannel}
           editChannel={editChannel}
           setEditChannel={setEditChannel}
+          setSelectedChannel={setSelectedChannel}
+          lastReadRef={lastReadRef}
             />
         }
         

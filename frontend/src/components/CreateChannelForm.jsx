@@ -3,7 +3,7 @@ import '../styles/CreateChannelForm.css'
 import { useEffect } from 'react';
 import CloseSquare from '../assets/Close_square.png';
 
-function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn, editChannel, selectedChannel,setEditChannel }) {
+function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn, editChannel, selectedChannel,setEditChannel,setSelectedChannel,lastReadRef }) {
     const [channelName, setChannelName] = useState('');
     const [user1, setUser1] = useState('');
     const [user2, setUser2] = useState('');
@@ -30,6 +30,8 @@ function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn, ed
         e.preventDefault();
         const url = editChannel?"https://text-messenger.onrender.com/update_channel":"https://text-messenger.onrender.com/create_channel";
         
+
+
         const options = {
             method: editChannel?"PATCH":"POST",
             headers: {
@@ -47,7 +49,8 @@ function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn, ed
             }),
         };
 
-        
+
+
 
         const response = await fetch(url, options);
         const data = await response.json();
@@ -61,6 +64,9 @@ function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn, ed
             setCreatingChannel(false);
             fetchChannels(); 
             setChangedElements(0);
+            setSelectedChannel(data.channel)
+            lastReadRef.current = 0;
+
 
         } else {
             console.error("Error creating channel:", data.error);
