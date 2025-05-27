@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import '../styles/MessageList.css'
 import Message from './Message';
 import { useEffect } from 'react';
+import config from '../config';
 
 function MessageList({ selectedChannel,setLoggedIn }) {
 //[message, user, time]
@@ -17,7 +18,7 @@ function MessageList({ selectedChannel,setLoggedIn }) {
     
     const fetchMessages = async () => {
         try {
-            const url = (process.env.REACT_APP_API_URL || "http://localhost:5000") + "/get_messages/" + String(selectedChannel.id) + "/0";
+            const url = config.url + "/get_messages/" + String(selectedChannel.id) + "/0";
             const options = {
                 method: "GET",
                 headers: {

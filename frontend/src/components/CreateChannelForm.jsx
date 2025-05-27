@@ -2,6 +2,7 @@ import { useState } from 'react'
 import '../styles/CreateChannelForm.css'
 import { useEffect } from 'react';
 import CloseSquare from '../assets/Close_square.png';
+import config from '../config';
 
 function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn, editChannel, selectedChannel,setEditChannel }) {
     const [channelName, setChannelName] = useState('');
@@ -28,7 +29,7 @@ function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn, ed
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const url = editChannel?(process.env.REACT_APP_API_URL || "http://localhost:5000") + "/update_channel":(process.env.REACT_APP_API_URL || "http://localhost:5000") + "/create_channel";
+        const url = editChannel? config.url + "/update_channel": config.url + "/create_channel";
         
         const options = {
             method: editChannel?"PATCH":"POST",

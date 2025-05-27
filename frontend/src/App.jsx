@@ -8,7 +8,7 @@ import MessageList from './components/MessageList'
 import MessageBox from './components/MessageBox'
 import ChannelHeader from './components/ChannelHeader'
 import { useEffect } from 'react';
-
+import config from '../config';
 import SearchIcon from './assets/search-normal.png'
 
 
@@ -54,7 +54,7 @@ function App() {
       return;
     }
     const searchq = searchQuery ? searchQuery : "NULLNULL";
-    const url = "https://text-messenger.onrender.com/get_channels/" + searchq;
+    const url = config.url + "/get_channels/" + searchq;
     const options = {
         method: "GET",
         headers: {

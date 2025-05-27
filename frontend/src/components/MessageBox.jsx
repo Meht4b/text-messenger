@@ -2,6 +2,7 @@ import { useState } from 'react'
 import '../styles/MessageBox.css'
 import { useEffect } from 'react';
 import submitIcon from '../assets/arrow-circle-right.png'
+import config from '../config';
 
 function MessageBox({currentChannel}) {
     const [message, setMessage] = useState('');
@@ -10,7 +11,7 @@ function MessageBox({currentChannel}) {
         e.preventDefault();
         const msg = message;
         setMessage('');
-        const url = (process.env.REACT_APP_API_URL || "http://localhost:5000") + "/send_message" ;
+        const url = config.url + "/send_message" ;
         const options = {
         method: "POST",
         headers: {
