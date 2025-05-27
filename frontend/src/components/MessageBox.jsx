@@ -2,7 +2,7 @@ import { useState } from 'react'
 import '../styles/MessageBox.css'
 import { useEffect } from 'react';
 import submitIcon from '../assets/arrow-circle-right.png'
-import config from '../config';
+import config from '.../config';
 
 function MessageBox({currentChannel}) {
     const [message, setMessage] = useState('');
