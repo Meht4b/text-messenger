@@ -13,8 +13,7 @@ import SearchIcon from './assets/search-normal.png'
 
 
 function App() {
-  
-  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [loggedIn, setLoggedIn] = useState(0)
   const [channelsList, setChannelsList] = useState([])
   const [creatingChannel, setCreatingChannel] = useState(false);
@@ -22,7 +21,6 @@ function App() {
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [selectedChannelName, setSelectedChannelName] = useState("");
   const [messages, setMessages] = useState([]);
-  const [lastMessageId, setLastMessageId] = useState(0);
   const [editChannel, setEditChannel] = useState(0);
 
   useEffect(() => {
@@ -56,7 +54,7 @@ function App() {
       return;
     }
     const searchq = searchQuery ? searchQuery : "NULLNULL";
-    const url = apiUrl+"/get_channels/" + searchq;
+    const url = "https://text-messenger.onrender.com/get_channels/" + searchq;
     const options = {
         method: "GET",
         headers: {
@@ -129,7 +127,7 @@ function App() {
                   setCreatingChannel={setCreatingChannel}
                   />
                 }
-                <MessageList selectedChannel={selectedChannel} setLoggedIn={setLoggedIn}  lastMessageId={lastMessageId} setLastMessageId = {setLastMessageId}/>
+                <MessageList selectedChannel={selectedChannel} setLoggedIn={setLoggedIn}/>
                 { 
                 selectedChannel &&
                   <MessageBox currentChannel={selectedChannel} />

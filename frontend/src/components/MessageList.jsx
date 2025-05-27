@@ -3,11 +3,9 @@ import '../styles/MessageList.css'
 import Message from './Message';
 import { useEffect } from 'react';
 
-function MessageList({ selectedChannel,setLoggedIn,lastMessageId,setLastMessageId }) {
+function MessageList({ selectedChannel,setLoggedIn }) {
 //[message, user, time]
     const [messages, setMessages] = useState([]);
-    const apiUrl = process.env.REACT_APP_API_URL;
-
 
     useEffect(() => {
         if (!selectedChannel) return;
@@ -19,7 +17,7 @@ function MessageList({ selectedChannel,setLoggedIn,lastMessageId,setLastMessageI
     
     const fetchMessages = async () => {
         try {
-            const url = apiUrl+"/get_messages/" + String(selectedChannel.id) + "/" + String(lastMessageId);
+            const url = "https://text-messenger.onrender.com/get_messages/" + String(selectedChannel.id) + "/0";
             const options = {
                 method: "GET",
                 headers: {
@@ -41,9 +39,6 @@ function MessageList({ selectedChannel,setLoggedIn,lastMessageId,setLastMessageI
             }
             const data = await response.json();
             setMessages(data.messages || []);
-            if (data.messages && data.messages.length > 0) {
-                setLastMessageId(data.messages[data.messages.length - 1].id);
-            }
 
         } catch (error) {
             console.error("Failed to fetch messages:", error);

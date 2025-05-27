@@ -14,8 +14,6 @@ function Login({propLogin, propError,setLoggedIn,callBack}) {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
 
-    const apiUrl = process.env.REACT_APP_API_URL;
-
 
     const handleSubmit = async (event) => {
 
@@ -23,7 +21,7 @@ function Login({propLogin, propError,setLoggedIn,callBack}) {
         const user = { name, password };
 
         if (Login == 0) {
-            const url = apiUrl+ "/create_user";
+            const url = "https://text-messenger.onrender.com/create_user";
             const options = {
                 method: "POST",
                 headers: {
@@ -46,7 +44,7 @@ function Login({propLogin, propError,setLoggedIn,callBack}) {
         }
 
         if (Login == 1) {
-            const url = apiUrl+"/check_password"
+            const url = "https://text-messenger.onrender.com/check_password"
             const options = {
                 method: "POST",
                 headers: {
