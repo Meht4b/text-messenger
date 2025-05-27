@@ -97,6 +97,10 @@
     background-color: #f0f0f0;
 }
 
+.search-container img{
+    max-height: 40px;
+}
+
 .search-container input{
     width: 100%;
     height: 100%;
