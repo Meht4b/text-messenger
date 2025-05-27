@@ -4,3 +4,4 @@ backend/instance/test.db
 /backend/instance
 backend/instance/test.db
 *.db
+frontend/.env
