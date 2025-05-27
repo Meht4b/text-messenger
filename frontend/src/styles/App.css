@@ -63,6 +63,7 @@
     border: none;
     border: solid 2px #363636;
     box-shadow: 0 0 10px rgba(141, 141, 141, 0.5);
+    min-height: 70px;
 
 }
 
