@@ -54,7 +54,7 @@ function App() {
       return;
     }
     const searchq = searchQuery ? searchQuery : "NULLNULL";
-    const url = "http://127.0.0.1:5000/get_channels/" + searchq;
+    const url = "https://text-messenger.onrender.com/get_channels/" + searchq;
     const options = {
         method: "GET",
         headers: {

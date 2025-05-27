@@ -21,6 +21,10 @@
 }
 
 .send-button img{
-    width: 45px;
+    transition: 0.2s;
+    opacity: 0.8;
+}
 
+.send-button img:hover{
+    opacity: 1;
 }
