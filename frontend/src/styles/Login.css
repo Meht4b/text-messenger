@@ -55,6 +55,8 @@
 .input-group input {
     flex: 1;
     font-size: 15px;
+    color: #2c2c2c;
+
     padding: 10px;
     border: none;
     border-radius: 5px;

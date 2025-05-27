@@ -9,6 +9,13 @@
     color: #383838;
 }
 
+.header-left{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-left: 10px;
+}
+
 .header-left-users{
     display: flex;
     align-items: center;
@@ -16,20 +23,34 @@
 
 }
 
-button{
+.edit-btn{
     background-color: #773dfffb;
     opacity: 0.9;
     border: none;
     outline: none;
     border-radius: 5px;
+    outline: solid;
     cursor: pointer;
     padding: 5px;
     height: 70px;
     
 }
 
-button:hover{
+.edit-btn:hover{
     opacity: 1;
+}
+
+.back-btn{
+    background-color: transparent;
+    border: none;
+    margin: none ;
+    padding: none;
+    height: 100%;
+}
+
+.back-btn img{
+    height: 35px;
+    width: 35px;
 }
 
 img{

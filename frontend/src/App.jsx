@@ -82,8 +82,84 @@ function App() {
         }
     }
   }
+  if (window.innerWidth < 600) {
+    return (
+        <>
+      {loggedIn === 0 ?
+        <Login propLogin={1} setLoggedIn={setLoggedIn} callBack={fetchChannels}/>
+        :
+        <div className='body-container'>
+          {selectedChannel ?
+          <div className='body-right'>
+                { 
+                  selectedChannel &&
+                  <ChannelHeader 
+                  selectedChannel={selectedChannel}
+                  setEditChannel={setEditChannel}
+                  setCreatingChannel={setCreatingChannel}
+                  setSelectedChannel={setSelectedChannel}
+                  />
+                }
+                <MessageList selectedChannel={selectedChannel} setLoggedIn={setLoggedIn}/>
+                { 
+                selectedChannel &&
+                  <MessageBox currentChannel={selectedChannel} />
+                }
+          </div> 
+          :
+          <div className='body-left'>
+            <div className='body-left-top-header'>
+              <div className='header-title'>
+                <h1>Channels</h1>
+              </div>
+                <div className='search-container'>
+                  <input 
+                  type="text" placeholder='Search Channels' 
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+
+                  }
+                }
+                  />
+                  <button className='search-button'><img src={SearchIcon} alt="" /></button>
+                </div>
+              </div>
+            
+            <div className='body-left-top'>
+
+              <ChannelList channels_list={channelsList} setSelectedChannel={setSelectedChannel} setSelectedChannelName = {setSelectedChannelName}/>
+            </div>
+            
+            <button className='create-channel-button' onClick={() => setCreatingChannel(true)}>
+              <h2>Create Channel</h2>
+            </button>
+          </div>
+          }
+
+
+        {
+          creatingChannel &&
+          <CreateChannelForm 
+          setCreatingChannel = {setCreatingChannel}
+          fetchChannels={fetchChannels}
+          setLoggedIn={setLoggedIn}
+          selectedChannel={selectedChannel}
+          editChannel={editChannel}
+          setEditChannel={setEditChannel}
+            />
+        }
+        
+        </div>
+        }
+      
+    </>
+    )
+  }
 
   return (
+
+
 
     <>
       {loggedIn === 0 ?

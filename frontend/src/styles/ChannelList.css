@@ -27,3 +27,11 @@
     margin-top: 20vh;
 
 }
+
+@media (max-width: 600px) {
+    .channel-list-container {
+
+        width: 100%;
+
+    }
+}
