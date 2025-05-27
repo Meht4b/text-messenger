@@ -12,6 +12,8 @@ function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn, ed
     const [error, setError] = useState(0);
     const [changedElements, setChangedElements] = useState(0);
 
+    const apiUrl = process.env.REACT_APP_API_URL;
+
 
     useEffect(() => {
         setLoggedIn(sessionStorage.getItem("loggedIn") || 0);
@@ -28,7 +30,7 @@ function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn, ed
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const url = editChannel?"https://text-messenger.onrender.com/update_channel":"https://text-messenger.onrender.com/create_channel";
+        const url = editChannel?apiUrl+"/update_channel":apiUrl+"/create_channel";
         
         const options = {
             method: editChannel?"PATCH":"POST",

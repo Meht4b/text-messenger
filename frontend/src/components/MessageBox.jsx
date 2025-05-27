@@ -5,12 +5,15 @@ import submitIcon from '../assets/arrow-circle-right.png'
 
 function MessageBox({currentChannel}) {
     const [message, setMessage] = useState('');
+    const apiUrl = process.env.REACT_APP_API_URL;
+
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const msg = message;
         setMessage('');
-        const url = "https://text-messenger.onrender.com/send_message" ;
+        const url = apiUrl+ "/send_message" ;
         const options = {
         method: "POST",
         headers: {
