@@ -4,13 +4,14 @@
     flex-direction: column;
     align-items: center;
     width: clamp(300px, 50vw, 500px);
-    color: white;
+    color: rgb(255, 255, 255);
     justify-content: space-between;
     background-color: #1d1d1d;
 
     padding: 20px;
     border: rgb(136, 136, 136) 1px solid;
     box-shadow: 0 0 10px rgb(146, 146, 146);
+    background-image: linear-gradient(45deg,#773DFF, #8f62f8);
 }
 
 .login-container h1 {
@@ -28,7 +29,7 @@
     width: 100%;
     height: 5px;
     border-radius: 0 5px 5px 0;
-    background-color: #773dff88;
+    background-color: #e9e0fd88;
 
 }
 
@@ -74,7 +75,7 @@
     padding: 10px;
     margin-top: 20px;
     background-color: #ffffff;
-    color: rgb(0, 0, 0);
+    color: rgb(63, 63, 63);
     border: none;
     border-radius: 2px;
     cursor: pointer;
@@ -82,7 +83,7 @@
 }
 
 .login-submit:hover{
-    background-color:#773dff ;
+    background-color:#d1bfff ;
 
 }
    
@@ -104,7 +105,7 @@
 
 .register-link:hover {
     color: #bb9eff;
-    border-bottom: #773DFF 1px solid;
+
 }
 
 .login-error {
@@ -116,7 +117,7 @@
     background-color: #FF3D3D;
 
     text-align: center;
-    color: black;
+    color: rgb(255, 255, 255);
     border-radius: 3px;
     bottom: 30px;
 }
@@ -131,6 +132,6 @@
 
     text-align: center;
     font-weight: 400;
-    color: rgb(20, 20, 20);
+    color: rgb(255, 255, 255);
     border-radius: 3px;
 }

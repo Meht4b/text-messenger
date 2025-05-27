@@ -2,3 +2,5 @@ backend/.env
 /backend/instance
 backend/instance/test.db
 /backend/instance
+backend/instance/test.db
+*.db
