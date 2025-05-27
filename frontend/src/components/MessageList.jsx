@@ -17,7 +17,7 @@ function MessageList({ selectedChannel,setLoggedIn }) {
     
     const fetchMessages = async () => {
         try {
-            const url = (process.env.REACT_APP_API_URL || "http://localhost:5000") + "/get_messages/" + String(selectedChannel.id) + "/0";
+            const url = "https://text-messenger.onrender.com/get_messages/" + String(selectedChannel.id) + "/0";
             const options = {
                 method: "GET",
                 headers: {

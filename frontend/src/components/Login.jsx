@@ -21,7 +21,7 @@ function Login({propLogin, propError,setLoggedIn,callBack}) {
         const user = { name, password };
 
         if (Login == 0) {
-            const url = (process.env.REACT_APP_API_URL || "http://localhost:5000") + "/create_user";
+            const url = "https://text-messenger.onrender.com/create_user";
             const options = {
                 method: "POST",
                 headers: {
@@ -44,7 +44,7 @@ function Login({propLogin, propError,setLoggedIn,callBack}) {
         }
 
         if (Login == 1) {
-            const url = (process.env.REACT_APP_API_URL || "http://localhost:5000") +"/check_password"
+            const url = "https://text-messenger.onrender.com/check_password"
             const options = {
                 method: "POST",
                 headers: {
