@@ -65,6 +65,12 @@ function Login({propLogin, propError,setLoggedIn,callBack}) {
                 sessionStorage.setItem("user", name);
                 setLoggedIn(1);
                 callBack();
+            }else if(response.status == 401 || response.status == 403) {
+
+                sessionStorage.removeItem("token");
+                sessionStorage.setItem("loggedIn", 0);
+                sessionStorage.removeItem("user");
+            
             } else {
                 setError(1);
                 setName("");

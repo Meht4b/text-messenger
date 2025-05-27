@@ -3,7 +3,7 @@ import '../styles/MessageList.css'
 import Message from './Message';
 import { useEffect } from 'react';
 
-function MessageList({ selectedChannel,setLoggedIn,lastReadRef }) {
+function MessageList({ selectedChannel,setLoggedIn,lastReadRef,setSelectedChannel }) {
 //[message, user, time]
     const [messages, setMessages] = useState([]);
 
@@ -55,8 +55,14 @@ function MessageList({ selectedChannel,setLoggedIn,lastReadRef }) {
 
             }
 
+
         } catch (error) {
-            console.error("Failed to fetch messages:", error);
+            console.error("Failed to fetch messages:", error.status);
+
+            lastReadRef.current = 0;
+            setSelectedChannel(0)
+
+            return;
         }
     }
 

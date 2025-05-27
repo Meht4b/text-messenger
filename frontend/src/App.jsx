@@ -108,6 +108,7 @@ function App() {
                 <MessageList selectedChannel={selectedChannel}
                  setLoggedIn={setLoggedIn} 
                  lastReadRef={lastReadRef}
+                 setSelectedChannel={setSelectedChannel}
                 />
                 { 
                 selectedChannel &&
@@ -222,6 +223,7 @@ function App() {
                 }
                 <MessageList selectedChannel={selectedChannel} setLoggedIn={setLoggedIn} 
                 lastReadRef={lastReadRef}
+                setSelectedChannel={setSelectedChannel}
                 />
                 { 
                 selectedChannel &&
