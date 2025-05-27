@@ -18,7 +18,7 @@ body {
   background-size: 1rem 1rem;
   overflow-x: hidden;
   overflow-y: hidden;
-  height: 100vh;
+  height: 100svh;
   width: 100vw;
 }
 
@@ -31,7 +31,7 @@ body {
   height: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
-  height: 100vh;
+  height: 100svh;
   width: 100vw;
 }
 
