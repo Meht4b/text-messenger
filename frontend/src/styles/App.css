@@ -126,6 +126,7 @@
     }
 
     .body-right{
+        width: 100svw;
         flex-grow: 0;
     }
 }
