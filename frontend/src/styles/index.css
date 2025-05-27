@@ -37,7 +37,7 @@ body {
 
 h1{
   font-size: 50px;
-    font-size: clamp(45px,10vw,50px);
+    font-size: clamp(40px,7vw,50px);
 
 }
 
