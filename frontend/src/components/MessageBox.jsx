@@ -10,7 +10,7 @@ function MessageBox({currentChannel}) {
         e.preventDefault();
         const msg = message;
         setMessage('');
-        const url = "https://text-messenger.onrender.com/send_message" ;
+        const url = (process.env.REACT_APP_API_URL || "http://localhost:5000") + "/send_message" ;
         const options = {
         method: "POST",
         headers: {
