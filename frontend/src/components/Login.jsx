@@ -105,6 +105,7 @@ function Login({propLogin, propError,setLoggedIn,callBack}) {
                     type="text" 
                     id="username"
                     name="username"
+                    autoComplete="off" autoCapitalize="off"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
@@ -115,6 +116,7 @@ function Login({propLogin, propError,setLoggedIn,callBack}) {
                     type="password"
                     id="password"
                     name="password"
+                    autoComplete="off" autoCapitalize="off"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />

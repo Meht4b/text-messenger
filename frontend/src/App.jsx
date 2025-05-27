@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { use, useRef, useState } from 'react'
 
 import './styles/App.css'
 import Login from './components/Login'
@@ -22,6 +22,8 @@ function App() {
   const [selectedChannelName, setSelectedChannelName] = useState("");
   const [messages, setMessages] = useState([]);
   const [editChannel, setEditChannel] = useState(0);
+
+  const lastReadRef = useRef(0)
 
   useEffect(() => {
     setLoggedIn(sessionStorage.getItem("loggedIn") || 0);
@@ -48,7 +50,6 @@ function App() {
   }, [searchQuery]);
 
   
-
   const fetchChannels = async () => {
     if (sessionStorage.getItem("token") == null || sessionStorage.getItem("token") == "" ) {
       return;
@@ -82,6 +83,10 @@ function App() {
         }
     }
   }
+
+  const getLastRead = () => {LastRead}
+  
+
   if (window.innerWidth < 600) {
     return (
         <>
@@ -100,7 +105,10 @@ function App() {
                   setSelectedChannel={setSelectedChannel}
                   />
                 }
-                <MessageList selectedChannel={selectedChannel} setLoggedIn={setLoggedIn}/>
+                <MessageList selectedChannel={selectedChannel}
+                 setLoggedIn={setLoggedIn} 
+                 lastReadRef={lastReadRef}
+                />
                 { 
                 selectedChannel &&
                   <MessageBox currentChannel={selectedChannel} />
@@ -128,7 +136,11 @@ function App() {
             
             <div className='body-left-top'>
 
-              <ChannelList channels_list={channelsList} setSelectedChannel={setSelectedChannel} setSelectedChannelName = {setSelectedChannelName}/>
+              <ChannelList 
+              channels_list={channelsList} 
+              setSelectedChannel={setSelectedChannel} setSelectedChannelName = {setSelectedChannelName} 
+              lastReadRef={lastReadRef}
+              />
             </div>
             
             <button className='create-channel-button' onClick={() => setCreatingChannel(true)}>
@@ -187,7 +199,9 @@ function App() {
             
             <div className='body-left-top'>
 
-              <ChannelList channels_list={channelsList} setSelectedChannel={setSelectedChannel} setSelectedChannelName = {setSelectedChannelName}/>
+              <ChannelList channels_list={channelsList}
+              setSelectedChannel={setSelectedChannel} setSelectedChannelName = {setSelectedChannelName}
+              lastReadRef={lastReadRef}/>
             </div>
             
             <button className='create-channel-button' onClick={() => setCreatingChannel(true)}>
@@ -203,7 +217,9 @@ function App() {
                   setCreatingChannel={setCreatingChannel}
                   />
                 }
-                <MessageList selectedChannel={selectedChannel} setLoggedIn={setLoggedIn}/>
+                <MessageList selectedChannel={selectedChannel} setLoggedIn={setLoggedIn} 
+                lastReadRef={lastReadRef}
+                />
                 { 
                 selectedChannel &&
                   <MessageBox currentChannel={selectedChannel} />

@@ -2,13 +2,7 @@ import { useState } from 'react'
 import '../styles/Message.css'
 import { useEffect } from 'react';
 
-function Message({ message, user, time,serverMsg }) {
-    const [isCurrentUser, setIsCurrentUser] = useState(false);
-
-    useEffect(() => {
-        const loggedInUser = sessionStorage.getItem("user");
-        setIsCurrentUser(loggedInUser === user);
-    }, [user]);
+function Message({ message, user, time,serverMsg,isUser }) {
 
     return (
         <> {serverMsg == true ?
@@ -16,7 +10,7 @@ function Message({ message, user, time,serverMsg }) {
                 {message}
             </div>
             :
-            <div className={`message ${isCurrentUser ? 'current-user' : 'other-user'}`}>
+            <div className={`message ${isUser ? 'current-user' : 'other-user'}`}>
                 <div className="message-header">
                     <span className="message-user">{user}</span>
                     <span className="message-time">{time}</span>

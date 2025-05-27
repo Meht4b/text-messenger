@@ -3,21 +3,27 @@ import '../styles/MessageList.css'
 import Message from './Message';
 import { useEffect } from 'react';
 
-function MessageList({ selectedChannel,setLoggedIn }) {
+function MessageList({ selectedChannel,setLoggedIn,lastReadRef }) {
 //[message, user, time]
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
+
         if (!selectedChannel) return;
         const interval = setInterval(() => {
             fetchMessages();
         }, 1000);
         return () => clearInterval(interval);
     }, [selectedChannel]);
-    
+
+    useEffect(() => {
+        setMessages([]);
+    }, [selectedChannel]);
+
     const fetchMessages = async () => {
         try {
-            const url = "https://text-messenger.onrender.com/get_messages/" + String(selectedChannel.id) + "/0";
+
+            const url = "https://text-messenger.onrender.com/get_messages/" + String(selectedChannel.id) + "/" + lastReadRef.current;
             const options = {
                 method: "GET",
                 headers: {
@@ -38,7 +44,16 @@ function MessageList({ selectedChannel,setLoggedIn }) {
 
             }
             const data = await response.json();
-            setMessages(data.messages || []);
+            
+
+            console.log(data.messages)
+            setMessages(prevMessages => [...prevMessages, ...(data.messages || [])]);
+
+
+            if (data.messages.length>0){
+                lastReadRef.current = data.messages[data.messages.length-1].id
+
+            }
 
         } catch (error) {
             console.error("Failed to fetch messages:", error);
@@ -81,6 +96,7 @@ function MessageList({ selectedChannel,setLoggedIn }) {
                         user={msg.user_name}
                         time={typeof msg.timestamp === 'string' ? msg.timestamp.slice(-8,-3) : ''}
                         serverMsg={msg.server_msg }
+                        isUser={msg.user_name == sessionStorage.getItem("user")}
                     />
                 ))
             ) : (

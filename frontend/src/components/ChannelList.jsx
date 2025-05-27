@@ -3,7 +3,7 @@ import '../styles/ChannelList.css'
 import { useEffect } from 'react';
 import Channel from './Channel'
 
-function ChannelList({channels_list,setSelectedChannel,setSelectedChannelName}) {
+function ChannelList({channels_list,setSelectedChannel,setSelectedChannelName,lastReadRef}) {
 
     
 
@@ -11,7 +11,7 @@ function ChannelList({channels_list,setSelectedChannel,setSelectedChannelName}) 
         <div className="channel-list-container">
             {channels_list && channels_list.length > 0 ? (
                 channels_list.map((channel, index) => (
-                    <Channel key={channel.id} channel={channel} setSelectedChannel={setSelectedChannel} />
+                    <Channel key={channel.id} channel={channel} setSelectedChannel={setSelectedChannel} lastReadRef={lastReadRef} />
                 ))
             ) : (
                 <div className='no-channels-found'>No channels</div>
