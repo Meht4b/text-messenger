@@ -11,7 +11,7 @@ function MessageList({ selectedChannel,setLoggedIn }) {
         if (!selectedChannel) return;
         const interval = setInterval(() => {
             fetchMessages();
-        }, 100);
+        }, 1000);
         return () => clearInterval(interval);
     }, [selectedChannel]);
     
