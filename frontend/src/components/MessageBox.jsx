@@ -8,7 +8,7 @@ function MessageBox({currentChannel}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        msg = message;
+        const msg = message;
         setMessage('');
         const url = "https://text-messenger.onrender.com/send_message" ;
         const options = {
