@@ -2,7 +2,7 @@ import { useState } from 'react'
 import '../styles/CreateChannelForm.css'
 import { useEffect } from 'react';
 import CloseSquare from '../assets/Close_square.png';
-import config from '../config';
+import config from '../config.js';
 
 function CreateChannelForm({ setCreatingChannel , fetchChannels, setLoggedIn, editChannel, selectedChannel,setEditChannel }) {
     const [channelName, setChannelName] = useState('');

@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import '../styles/MessageList.css'
 import Message from './Message';
 import { useEffect } from 'react';
-import config from '../config';
+import config from '../config.js';
 
 function MessageList({ selectedChannel,setLoggedIn }) {
 //[message, user, time]

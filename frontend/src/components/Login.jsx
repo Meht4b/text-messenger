@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import '../styles/Login.css'
 import { useEffect } from 'react';
-import config from '../config';
+import config from '../config.js';
 
 function Login({propLogin, propError,setLoggedIn,callBack}) {
 

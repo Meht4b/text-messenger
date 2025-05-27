@@ -8,7 +8,7 @@ import MessageList from './components/MessageList'
 import MessageBox from './components/MessageBox'
 import ChannelHeader from './components/ChannelHeader'
 import { useEffect } from 'react';
-import config from '../config';
+import config from '../config.js';
 import SearchIcon from './assets/search-normal.png'
 
 
