@@ -35,7 +35,7 @@ function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       fetchChannels();
-    }, 1000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
