@@ -21,8 +21,10 @@
     display: flex;
     align-items: center;
     color: #696969;
-
+    flex-wrap: wrap;
+    max-width: 70vw;
 }
+
 
 .edit-btn{
     background-color: #773dfffb;
