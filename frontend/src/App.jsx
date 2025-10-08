@@ -84,7 +84,6 @@ function App() {
     }
   }
 
-  const getLastRead = () => {LastRead}
   
 
   if (window.innerWidth < 600) {
