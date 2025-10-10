@@ -70,6 +70,11 @@ function Login({propLogin, propError,setLoggedIn,callBack}) {
                 sessionStorage.removeItem("token");
                 sessionStorage.setItem("loggedIn", 0);
                 sessionStorage.removeItem("user");
+
+                setError(1);
+                setName("");
+                setPassword("");
+                console.log(data.error)
             
             } else {
                 setError(1);
